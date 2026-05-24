@@ -4,10 +4,14 @@ description: Acciones a realizar por el equipo de backend
 
 # 👩‍💻 Integración vía iframe (2 de 2): backend
 
-Esta sección debe realizarse a continuación del checklist de frontend. Los pasos son los siguientes
+Esta sección debe realizarse después de completar del checklist de frontend. Los pasos son los siguientes
 
-* [ ] Crea la URL en tu entorno donde recibirás los datos obtenidos por el widget.
-* [ ] En el body de respuesta, como confirmación de que has recibido correctamente los datos, incluye
+*   [ ] **Crear la URL de callback**\
+    Crea en tu entorno una URL de callback donde Wealthreader enviará los datos obtenidos a través del widget.
+
+    Esta URL debe poder recibir peticiones `POST` con un cuerpo en formato JSON.
+
+    Como confirmación de que los datos se han recibido correctamente, tu endpoint debe responder con HTTP `200` y el siguiente cuerpo:
 
 ```json
 {
@@ -15,28 +19,15 @@ Esta sección debe realizarse a continuación del checklist de frontend. Los pas
 }
 ```
 
-*   [ ] Asocia el dominio donde cargas el widget con tu URL de callback y tu api\_key:<br>
+* [ ] **Asociar el dominio, la URL de callback y la API key**
 
-    ```bash
-    # Define las variables
-    API_KEY='12345678'
-    DOMAIN='http://desarrollo.cliente.es' #no puede ser una IP ni incluir la palabra localhost
-    URL_CALLBACK='https://desarrollo.cliente.es/hooks/wealthreader'
-    #Valores posibles, ['widget','oauth']
-    ACCESS_TYPE='widget'
+Desde el área de clientes de Wealth Reader, asocia:
 
+* el dominio desde el que se cargará el widget;
+* la URL de callback donde recibirás los datos;
+* tu `api_key`.
 
-    # Ejecuta el comando curl utilizando las variables
-    curl --location "https://api.wealthreader.com/domains/" \
-    --header "Content-Type: application/x-www-form-urlencoded" \
-    --data-urlencode "method=add" \
-    --data-urlencode "tokenize=1" \
-    --data-urlencode "api_key=${API_KEY}" \
-    --data-urlencode "domain=${DOMAIN}" \
-    --data-urlencode "url_callback=${URL_CALLBACK}" \
-    --data-urlencode "access_type=${ACCESS_TYPE}"
-    ```
-
+Puedes hacerlo desde: [https://www.wealthreader.com/clients/](https://www.wealthreader.com/clients/)
 
 * [ ] Para probar el flujo completo, abre la página que carga el Widget que ha creado tu compañero de front y escribe datos reales o utiliza alguno de los usuarios mock que te hemos proporcionado en el email de bienvenida. Si no tienes este email, pídelo a support@wealthreader.com
 * [ ] Existen usuarios "mock" con los que probar el flujo de datos sin necesidad de realizar una conexión real. Introduciendo MOCKDATA como usuario con cualquier contraseña, se recibirán datos de ejemplo correctos anonimizados. Existen otros usuarios mock que recrean errores, como MOCKLOGINKO. Puede pedir a nuestro soporte el listado completo.
